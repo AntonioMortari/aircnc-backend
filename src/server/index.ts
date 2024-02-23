@@ -1,5 +1,7 @@
 import express from 'express';
+
 import 'dotenv/config';
+import './database/mongodb';
 
 const server = express();
 
