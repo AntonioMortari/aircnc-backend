@@ -6,6 +6,7 @@ import { spotsRoutes } from './routes/spots.routes';
 
 import 'dotenv/config';
 import './database/mongodb';
+import { errors } from 'celebrate';
 
 const server = express();
 
@@ -16,5 +17,6 @@ server.use(express.urlencoded({ extended: true }));
 server.use('/users', usersRoutes);
 server.use('/spots', spotsRoutes);
 
+server.use(errors());
 server.use(errorMiddleware);
 export { server };

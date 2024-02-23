@@ -1,7 +1,8 @@
 import { Request, Response, Router } from 'express';
-import {MongoUsersRepository} from '../repositories/User/MongoUsersRepository';
-import {UsersService} from '../services/UsersService';
-import {UsersController} from '../controllers/UsersController';
+import { MongoUsersRepository } from '../repositories/User/MongoUsersRepository';
+import { UsersService } from '../services/UsersService';
+import { UsersController } from '../controllers/UsersController';
+import { createUserValidation } from '../validations/User';
 
 const router: Router = Router();
 
@@ -10,16 +11,16 @@ const usersRepository = new MongoUsersRepository();
 const usersService = new UsersService(usersRepository);
 const usersController = new UsersController(usersService);
 
-router.get('/:id', async(req: Request, res: Response) => {
-    await usersController.show(req,res);
+router.get('/:id', async (req: Request, res: Response) => {
+    await usersController.show(req, res);
 });
 
-router.post('/', async(req: Request, res: Response) => {
-    await usersController.store(req,res);
+router.post('/', createUserValidation, async (req: Request, res: Response) => {
+    await usersController.store(req, res);
 });
 
-router.delete('/:id', async(req: Request, res: Response) => {
-    await usersController.destroy(req,res);
+router.delete('/:id', async (req: Request, res: Response) => {
+    await usersController.destroy(req, res);
 });
 
 export { router as usersRoutes };
