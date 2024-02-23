@@ -9,6 +9,8 @@ const errorMiddleware = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     next: NextFunction
 ) => {
+    console.log(error.stack);
+
     const message = typeof error.getStatusCode === 'function' ? error.message : 'Internal Server Error';
     const statusCode = typeof error.getStatusCode === 'function' ? error.getStatusCode() :  StatusCodes.INTERNAL_SERVER_ERROR;
     

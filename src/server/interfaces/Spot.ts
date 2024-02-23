@@ -1,5 +1,6 @@
 
 export interface ISpot{
+    id: string;
     company: string;
     price: number;
     techs: string[];
