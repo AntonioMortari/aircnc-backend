@@ -4,7 +4,7 @@ const createSpotValidation = celebrate({
     [Segments.BODY]: Joi.object().keys({
         company: Joi.string().required(),
         price: Joi.number().required(),
-        techs: Joi.array().items(Joi.string()).optional(),
+        techs: Joi.any(),
         user_id: Joi.string().required()
     })
 }, { abortEarly: false });
