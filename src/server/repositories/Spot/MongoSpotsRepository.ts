@@ -15,8 +15,13 @@ class MongoSpotsRepository implements ISpotsRepository {
         return result._id.toString();
     }
 
-    public async findAll(): Promise<ISpot[]> {
-        const result = await Spot.find();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public async findAll(query?: any): Promise<ISpot[]> {
+        let filter = {};
+        if (query && query.tech) {
+            filter = { techs: { $in: [query.tech] } };
+        }
+        const result = await Spot.find(filter);
 
         const spots: ISpot[] = result.map(spot => {
             return {
@@ -30,12 +35,12 @@ class MongoSpotsRepository implements ISpotsRepository {
         });
 
         return spots;
-    }
+    }    
 
-    public async findById(id: string): Promise<ISpot | null>{
-        const result = await Spot.findOne({_id: id});
+    public async findById(id: string): Promise<ISpot | null> {
+        const result = await Spot.findOne({ _id: id });
 
-        if(!result) return null;
+        if (!result) return null;
 
         return {
             id: result._id.toString(),
@@ -48,11 +53,11 @@ class MongoSpotsRepository implements ISpotsRepository {
         };
     }
 
-    public async findSpotsByUserId(user_id: string): Promise<ISpot[]>{
-        const result = await Spot.find({user_id: user_id});
+    public async findSpotsByUserId(user_id: string): Promise<ISpot[]> {
+        const result = await Spot.find({ user_id: user_id });
 
         const spots: ISpot[] = result.map(spot => {
-            return{
+            return {
                 id: spot._id.toString(),
                 company: spot.company,
                 price: spot.price,

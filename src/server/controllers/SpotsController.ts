@@ -30,8 +30,8 @@ class SpotsController {
     }
 
     public async index(req: Request, res: Response) {
-        const result = await this.service.findAll();
-
+        const query = req.query;
+        const result = await this.service.findAll(query);
         return res.status(StatusCodes.OK).json(result);
     }
 

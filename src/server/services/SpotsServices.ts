@@ -33,8 +33,9 @@ class SpotsServices {
         return result;
     }
 
-    public async findAll() {
-        return await this.repository.findAll();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public async findAll(query?: any) {
+        return await this.repository.findAll(query);
     }
 
     public async findSpotsByUserId(user_id: string) {

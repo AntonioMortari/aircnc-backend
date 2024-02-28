@@ -18,7 +18,8 @@ export interface ISpotsCreate {
 
 export interface ISpotsRepository {
     create: ({ company, price, techs, thumbnail, user_id }: ISpotsCreate) => Promise<string>
-    findAll: () => Promise<ISpot[]>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    findAll: (query: any) => Promise<ISpot[]>
     findById: (id: string) => Promise<ISpot | null>
     findSpotsByUserId: (user_id: string) => Promise<ISpot[]> 
 }
