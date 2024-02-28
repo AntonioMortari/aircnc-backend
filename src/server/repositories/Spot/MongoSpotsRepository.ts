@@ -32,6 +32,22 @@ class MongoSpotsRepository implements ISpotsRepository {
         return spots;
     }
 
+    public async findById(id: string): Promise<ISpot | null>{
+        const result = await Spot.findOne({_id: id});
+
+        if(!result) return null;
+
+        return {
+            id: result._id.toString(),
+            company: result.company,
+            techs: result.techs,
+            price: result.price,
+            thumbnail: result.thumbnail,
+            user_id: result.user_id
+
+        };
+    }
+
     public async findSpotsByUserId(user_id: string): Promise<ISpot[]>{
         const result = await Spot.find({user_id: user_id});
 

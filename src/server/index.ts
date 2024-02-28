@@ -5,6 +5,7 @@ import cors from 'cors';
 import { errorMiddleware } from './middlewares/error';
 import { usersRoutes } from './routes/users.routes';
 import { spotsRoutes } from './routes/spots.routes';
+import { bookingRoutes } from './routes/booking.routes';
 
 import 'dotenv/config';
 import './database/mongodb';
@@ -20,6 +21,7 @@ server.use('/files', express.static(path.resolve(__dirname, '..', '..', 'public'
 // routes
 server.use('/users', usersRoutes);
 server.use('/spots', spotsRoutes);
+server.use('/',  bookingRoutes);
 
 server.use(errors());
 server.use(errorMiddleware);

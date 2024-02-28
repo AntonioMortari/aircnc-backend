@@ -14,7 +14,7 @@ class UsersService {
         const result = await this.repository.findById(id);
 
         if (!result) {
-            throw new AppError('User not found', 404);
+            throw new AppError('User not found', StatusCodes.NOT_FOUND);
         }
 
         return result;
@@ -35,7 +35,7 @@ class UsersService {
     public async delete(id: string){
         const findUser = await this.repository.findById(id);
         if (!findUser) {
-            throw new AppError('User not found', 404);
+            throw new AppError('User not found', StatusCodes.NOT_FOUND);
         }
 
         await this.repository.delete(id);
