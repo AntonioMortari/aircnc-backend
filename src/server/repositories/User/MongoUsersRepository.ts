@@ -17,8 +17,6 @@ class MongoUsersRepository implements IUsersRepository {
     public async findByEmail(email: string): Promise<IUser | null>{
         const result = await User.findOne({email});
 
-        console.debug(result);
-
         if(!result) return null;
 
         return {

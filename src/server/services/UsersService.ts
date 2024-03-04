@@ -23,13 +23,12 @@ class UsersService {
     public async create({ email }: IUserCreate) {
 
         const findUser = await this.repository.findByEmail(email);
-        if (findUser) {
-            throw new AppError(`Email ${email} already registered`, StatusCodes.BAD_REQUEST);
+        if (!findUser) {
+            const result = await this.repository.create({ email });
+            return result;
         }
 
-        const result = await this.repository.create({ email });
-
-        return result;
+        return findUser.id;
     }
 
     public async delete(id: string){
