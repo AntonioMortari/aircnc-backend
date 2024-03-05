@@ -4,6 +4,7 @@ import { IBookingCreate, IBookingRepository } from '../interfaces/Booking';
 import { ISpotsRepository } from '../interfaces/Spot';
 import { IUsersRepository } from '../interfaces/User';
 import { isValidObjectId } from 'mongoose';
+import { isAfter } from 'date-fns';
 
 class BookingService {
 
@@ -22,6 +23,7 @@ class BookingService {
     }
 
     public async create({ date, user_id, spot_id }: IBookingCreate) {
+        const formattedDate = new Date(date);
 
         if (!isValidObjectId(user_id) || !isValidObjectId(spot_id)) {
             throw new AppError('ObjectId is required', StatusCodes.BAD_REQUEST);
@@ -37,6 +39,10 @@ class BookingService {
         const findSpot = await this.spotsRepository.findById(spot_id);
         if (!findSpot) {
             throw new AppError('Spot not found', StatusCodes.NOT_FOUND);
+        }
+
+        if (!isAfter(formattedDate, new Date())) {
+            throw new AppError('Não é possível reservar para uma data que já passou', StatusCodes.BAD_REQUEST);
         }
 
         return await this.repository.create({

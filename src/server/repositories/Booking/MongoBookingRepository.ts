@@ -10,6 +10,9 @@ class MongoBookingRepository implements IBookingRepository {
             user_id
         });
 
+        result.populate('spot');
+        result.populate('user');
+
         return result._id.toString();
     }
 
