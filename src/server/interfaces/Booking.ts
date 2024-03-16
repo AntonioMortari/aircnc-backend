@@ -1,3 +1,4 @@
+
 export interface IBooking {
     id: string;
     date: Date;
@@ -12,6 +13,9 @@ export interface IBookingCreate {
     spot_id: string;
 }
 
+
 export interface IBookingRepository {
-    create: ({ date, spot_id, user_id }: IBookingCreate) => Promise<string>
+    create: ({ date, spot_id, user_id }: IBookingCreate) => Promise<IBooking>;
+    findById: (id: string) => Promise<IBooking | null>;
+    updateApproved: (id: string, approved: boolean) => Promise<IBooking | null>
 }

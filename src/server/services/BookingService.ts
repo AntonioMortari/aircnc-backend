@@ -45,11 +45,15 @@ class BookingService {
             throw new AppError('Não é possível reservar para uma data que já passou', StatusCodes.BAD_REQUEST);
         }
 
-        return await this.repository.create({
+        const booking = await this.repository.create({
             date,
             user_id,
             spot_id
         });
+
+        const bookingPopulate = { ...booking, user: findUser, spot: findSpot};
+
+        return bookingPopulate;
 
     }
 
